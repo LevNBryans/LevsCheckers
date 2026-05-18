@@ -1,0 +1,187 @@
+<html>
+    <head>
+        <style>
+            body{
+                display:flex;
+                flex-wrap: wrap;
+            }
+            #board{
+                width:400px;
+                height:400px;
+                background-color:Green;
+            }
+            div div{
+                width:50px;
+                height:50px;
+                position: absolute;
+            }
+            img{
+                width:50px;
+                height:50px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Lev's Checkers</h1>
+        <div id = board></div>
+        <script>
+            // Setting up the board
+            const board = document.getElementById("board")
+            let x = 0;
+            let pickedUpPiece = false;
+            let checkerLocation = [0,0];
+            let horizontallyCorrect = false;
+            let goodVertical = false;
+            let pieceIsRightColor = false;
+            console.log(pickedUpPiece)
+            const checker = document.createElement("img");
+            checker.src = "https://i.ebayimg.com/images/g/PBcAAOSw2NhcZzFj/s-l400.jpg"
+            while(x<8){
+                let i = 0;
+                while(i<8){
+                    newDiv = document.createElement("div");
+                    if(x == 0 || x % 2 == 0){
+                        if(i % 2 == 0){
+                            newDiv.style.backgroundColor = "SaddleBrown";
+                            newDiv.style.color = "SaddleBrown";
+                        }
+                        else{
+                            newDiv.style.backgroundColor = "SandyBrown";
+                            newDiv.style.color = "SandyBrown";
+                        }
+                    }
+                    
+                    else{
+                        if(i % 2 == 0){
+                            newDiv.style.backgroundColor = "SandyBrown";
+                            newDiv.style.color = "SandyBrown";
+                        }
+                        else{
+                            newDiv.style.backgroundColor = "SaddleBrown";
+                            newDiv.style.color = "SaddleBrown";
+                        }
+                    }
+                    
+                    let realI = i % 8;
+                    let rightMove = String(realI * 50) + "px";
+                    let downMove = String(x * 50) + "px"
+                    newDiv.style.transform = `translate(${rightMove}, ${downMove})`; 
+                    //console.log(rightMove)
+                    //console.log(realI)
+                    board.appendChild(newDiv);
+                    newDiv.innerHTML = [x, i, ]
+                    if (x == 5 || x == 6 || x == 7){
+                        goodBlackVertical = true;
+                        //console.log("good vetical")
+                    }
+                    else{
+                        goodBlackVertical = false; 
+                    }
+                    if (x == 0 || x == 1 || x == 2){
+                        goodRedVertical = true;
+                        //console.log("good vetical")
+                    }
+                    else{
+                        goodRedVertical = false;
+                    }
+                    if ((x - i) % 2 == 0 && goodRedVertical){
+                        const checker = document.createElement("img");
+                        checker.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6yBCTQfG1DzRswfrWUj8vw4D1dHYYFSFJA&s"
+                        newDiv.appendChild(checker)
+                        checker.setAttribute("id", `${x},${i},R`)
+                        console.log(checker.getAttribute("id"))
+                        //console.log("checker in position")
+                    }
+                    if ((x - i) % 2 == 0 && goodBlackVertical){
+                        const checker = document.createElement("img");
+                        checker.src = "https://i.ebayimg.com/images/g/PBcAAOSw2NhcZzFj/s-l400.jpg"
+                        newDiv.appendChild(checker)
+                        checker.setAttribute("id", `${x},${i},B`)
+                        console.log(checker.getAttribute("id"))
+                        //console.log("checker in position")
+                    }
+                    newDiv.addEventListener("click", pickUpPiece);
+                    i++;
+                }
+            x++;
+            }
+            
+            let blackTurn = true;
+            
+            function pickUpPiece(){
+                //console.log(this.querySelector("img").getAttribute("id"));
+                
+                
+                if ( ([...this.innerHTML][2] == String(Number(checkerLocation[2])-1) ||  [...this.innerHTML][2] == String(Number(checkerLocation[2])+1) ) && [...this.innerHTML][0] != checkerLocation[0]){
+                    console.log("horizontally")
+                    horizontallyCorrect = true;
+                }
+                if (!pickedUpPiece){
+                    if (blackTurn && [...this.querySelector("img").getAttribute("id")][4] == "B" && !pickedUpPiece){
+                        pieceIsRightColor = true;
+                        console.log("right color")
+                    }
+                }
+                if ([...this.innerHTML][4] == "R" && !blackTurn && !pickedUpPiece){
+                    pieceIsRightColor = true;
+                }
+                if (pickedUpPiece && horizontallyCorrect && [...this.innerHTML][0] == checkerLocation[0]-1){
+                    if( [...this.innerHTML].length > 10){
+                    }
+                    else{
+                        console.log("placed")
+                        let thisLocation = [...this.innerHTML]
+                        const checker = document.createElement("img");
+                        if(blackTurn){
+                            checker.src = "https://i.ebayimg.com/images/g/PBcAAOSw2NhcZzFj/s-l400.jpg"
+                            this.appendChild(checker)
+                            checker.setAttribute("id", `${thisLocation[0]},${thisLocation[2]}`)
+                            blackTurn = false;
+                        }
+                        else{
+                            checker.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6yBCTQfG1DzRswfrWUj8vw4D1dHYYFSFJA&s"
+                            this.appendChild(checker)
+                            checker.setAttribute("id", `${thisLocation[0]},${thisLocation[2]}`)
+                            blackTurn = true;
+                        }
+                        let listOfCheckers = document.getElementsByClassName("hasChecker")
+                        console.log(listOfCheckers)
+                        let i = 0;
+                        while(i<listOfCheckers.length){
+                            if(listOfCheckers[i] == checkerLocation.innerHTML){
+                                console.log("found")
+                            }
+                            i++;
+                        }
+                        pickedUpPiece = false;
+                        horizontallyCorrect = false;
+                    }
+
+                }
+                else if(this.innerHTML.length > 10 && pieceIsRightColor){
+                    console.log("has chekcer")
+                    checkerLocation = [...this.innerHTML]
+                    console.log(checkerLocation)
+                    pickedUpPiece = true;
+                    console.log(pickedUpPiece)
+                    let checkerId = String(checkerLocation[0]) + String(checkerLocation[1]) + String(checkerLocation[2]) 
+                    if(blackTurn){
+                        checkerId = checkerId + ",B"
+                    }
+                    else{
+                        checkerId = checkerId + ",R"
+                    }
+                    console.log(checkerId)
+                    let checkerToRemove = document.getElementById(checkerId)
+                    console.log(checkerToRemove)
+                    this.removeChild(checkerToRemove)
+                    horizontallyCorrect = false;
+                    
+                } 
+                console.log(Number(checkerLocation[2])+1)
+                console.log(checkerLocation[2])
+                console.log(checkerLocation[2]-1)
+            }
+        </script>
+    </body>
+</html>
