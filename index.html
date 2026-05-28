@@ -49,7 +49,7 @@
             console.log(pickedUpPiece)
             console.log("test1")
             const checker = document.createElement("img");
-            checker.src = "https://i.ebayimg.com/images/g/PBcAAOSw2NhcZzFj/s-l400.jpg"
+            checker.src = "blackChecker.png"
             while(x<8){
                 let i = 0;
                 while(i<8){
@@ -102,7 +102,7 @@
                     if ((x - i) % 2 == 0 && goodRedVertical){
                         
                         const checker = document.createElement("img");
-                        checker.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6yBCTQfG1DzRswfrWUj8vw4D1dHYYFSFJA&s"
+                        checker.src = "redChecker.png"
                         newDiv.appendChild(checker)
                         checker.setAttribute("id", `${x},${i},R`)
                         console.log(checker.getAttribute("id"))
@@ -111,7 +111,7 @@
                     }
                     if ((x - i) % 2 == 0 && goodBlackVertical){
                         const checker = document.createElement("img");
-                        checker.src = "https://i.ebayimg.com/images/g/PBcAAOSw2NhcZzFj/s-l400.jpg"
+                        checker.src = "blackChecker.png"
                         newDiv.appendChild(checker)
                         checker.setAttribute("id", `${x},${i},B`)
                         console.log(checker.getAttribute("id"))
@@ -185,11 +185,11 @@
                                     let square = document.getElementById(squareId);
                                     const checker = document.createElement("img");
                                     if((squareId[0] == 0) || (checkerId[6] == "K")){
-                                        checker.src = "https://chongzizil.github.io/Checkers-SMG/imgs/black_cro.png"
+                                        checker.src = "blackCheckerKing.png"
                                         checker.setAttribute("id", `${squareId[0]},${squareId[2]},B,K`)
                                     }
                                     else{
-                                        checker.src = "https://i.ebayimg.com/images/g/PBcAAOSw2NhcZzFj/s-l400.jpg"
+                                        checker.src = "blackChecker.png"
                                         checker.setAttribute("id", `${squareId[0]},${squareId[2]},B`)
                                     }
                                     square.appendChild(checker)
@@ -204,7 +204,7 @@
                                 let square = document.getElementById(squareId);
                                     const checker = document.createElement("img");
                                     if((squareId[0] == 0) || (checkerId[6] == "K")){
-                                        checker.src = "https://chongzizil.github.io/Checkers-SMG/imgs/black_cro.png"
+                                        checker.src = "blackCheckerKing.png"
                                         checker.setAttribute("id", `${squareId[0]},${squareId[2]},B,K`)
                                     }
                                     square.appendChild(checker)
@@ -228,18 +228,18 @@
                                 let square = this;
                                 const checker = document.createElement("img");
                                 if(    ((String(checkerId)[6] == "K") || (squareId[0] == 0))    && (String(checkerId)[4] == "B")){
-                                    checker.src = "https://chongzizil.github.io/Checkers-SMG/imgs/black_cro.png"
+                                    checker.src = "blackCheckerKing.png"
                                     checker.setAttribute("id", `${squareId[0]},${squareId[2]},B,K`)
                                     blackTurn = false;
 
                                 }
                                 else if(    ((String(checkerId)[6] == "K") || (squareId[7] == 0))    && (String(checkerId)[4] == "R")){
-                                    checker.src = "https://lh5.googleusercontent.com/proxy/UcPKlsHCwOMun2DJiEgg8KMA7wPfP5NiEPR5XkKj5rWuhQOrpn9cuHJXwEOynuMlO6GjsQ4VpY8Jvn2vqjsijVo2fgmksU3gLKn-6pEHzPkO6J1b"
+                                    checker.src = "redCheckerKing.png"
                                     checker.setAttribute("id", `${squareId[0]},${squareId[2]},R,K`)
                                     blackTurn = true;
                                 }
                                 else{
-                                    checker.src = "https://i.ebayimg.com/images/g/PBcAAOSw2NhcZzFj/s-l400.jpg"
+                                    checker.src = "blackChecker.png"
                                     checker.setAttribute("id", `${squareId[0]},${squareId[2]},B`)
                                     blackTurn = false;
                                 }
@@ -277,17 +277,17 @@
                                 let square = document.getElementById(squareId);
                                 const checker = document.createElement("img");
                                 if(    ((String(checkerId)[6] == "K") || (squareId[0] == 0))    && (String(checkerId)[4] == "B")){
-                                    checker.src = "https://chongzizil.github.io/Checkers-SMG/imgs/black_cro.png"
+                                    checker.src = "blackCheckerKing.png"
                                     checker.setAttribute("id", `${squareId[0]},${squareId[2]},B,K`)
                                     blackTurn = false
                                 }
                                 else if(    ((String(checkerId)[6] == "K") || (squareId[7] == 0))    && (String(checkerId)[4] == "R")){
-                                    checker.src = "https://lh5.googleusercontent.com/proxy/UcPKlsHCwOMun2DJiEgg8KMA7wPfP5NiEPR5XkKj5rWuhQOrpn9cuHJXwEOynuMlO6GjsQ4VpY8Jvn2vqjsijVo2fgmksU3gLKn-6pEHzPkO6J1b"
+                                    checker.src = "redCheckerKing.png"
                                     checker.setAttribute("id", `${squareId[0]},${squareId[2]},R,K`)
                                     blackTurn = true
                                 }
                                 else{
-                                    checker.src = "https://i.ebayimg.com/images/g/PBcAAOSw2NhcZzFj/s-l400.jpg"
+                                    checker.src = "blackChecker.png"
                                     checker.setAttribute("id", `${squareId[0]},${squareId[2]},B`)
                                     blackTurn = false
                                 }
@@ -323,11 +323,11 @@
                                     let square = document.getElementById(squareId);
                                     const checker = document.createElement("img");
                                     if((checkerId[6] == "K") || (squareId[0] == 7)){
-                                        checker.src = "https://lh5.googleusercontent.com/proxy/UcPKlsHCwOMun2DJiEgg8KMA7wPfP5NiEPR5XkKj5rWuhQOrpn9cuHJXwEOynuMlO6GjsQ4VpY8Jvn2vqjsijVo2fgmksU3gLKn-6pEHzPkO6J1b"
+                                        checker.src = "blackCheckerKing.png"
                                         checker.setAttribute("id", `${squareId[0]},${squareId[2]},R,K`)
                                     }
                                     else{
-                                        checker.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6yBCTQfG1DzRswfrWUj8vw4D1dHYYFSFJA&s"
+                                        checker.src = "redChecker.png"
                                         checker.setAttribute("id", `${squareId[0]},${squareId[2]},R`)
                                     }
                                     square.appendChild(checker)
@@ -342,7 +342,7 @@
                                     let square = document.getElementById(squareId);
                                     const checker = document.createElement("img");
                                     if((squareId[0] == 7) || (checkerId[6] == "K")){
-                                        checker.src = "https://lh5.googleusercontent.com/proxy/UcPKlsHCwOMun2DJiEgg8KMA7wPfP5NiEPR5XkKj5rWuhQOrpn9cuHJXwEOynuMlO6GjsQ4VpY8Jvn2vqjsijVo2fgmksU3gLKn-6pEHzPkO6J1b"                                        
+                                        checker.src = "redCheckerKing.png"                                        
                                         checker.setAttribute("id", `${squareId[0]},${squareId[2]},R,K`)
                                     }
                                     square.appendChild(checker)
@@ -369,17 +369,17 @@
                                     let square = document.getElementById(squareId);
                                     const checker = document.createElement("img");
                                     if(String(checkerId)[4] == "B"){
-                                        checker.src = "https://chongzizil.github.io/Checkers-SMG/imgs/black_cro.png"
+                                        checker.src = "blackCheckerKing.png"
                                         checker.setAttribute("id", `${squareId[0]},${squareId[2]},B,K`)
                                         blackTurn = false;
                                     }
                                     else if((String(checkerId)[4] == "R") && ((String(checkerId)[6] == "K") || (squareId[0] == 7)) ){
-                                        checker.src = "https://lh5.googleusercontent.com/proxy/UcPKlsHCwOMun2DJiEgg8KMA7wPfP5NiEPR5XkKj5rWuhQOrpn9cuHJXwEOynuMlO6GjsQ4VpY8Jvn2vqjsijVo2fgmksU3gLKn-6pEHzPkO6J1b"
+                                        checker.src = "redCheckerKing.png"
                                         blackTurn = true;
                                         checker.setAttribute("id", `${squareId[0]},${squareId[2]},R,K`)
                                     } 
                                     else{
-                                        checker.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6yBCTQfG1DzRswfrWUj8vw4D1dHYYFSFJA&s"
+                                        checker.src = "redChecker.png"
                                         blackTurn = true;
                                         checker.setAttribute("id", `${squareId[0]},${squareId[2]},R`)
                                     }
@@ -411,17 +411,17 @@
                                     let square = document.getElementById(squareId);
                                     const checker = document.createElement("img");
                                     if(String(checkerId)[4] == "B"){
-                                        checker.src = "https://chongzizil.github.io/Checkers-SMG/imgs/black_cro.png"
+                                        checker.src = "blackCheckerKing.png"
                                         blackTurn = false;
                                         checker.setAttribute("id", `${squareId[0]},${squareId[2]},B,K`)
                                     }
                                     else if((String(checkerId)[4] == "R") && ((String(checkerId)[6] == "K") || (squareId[0] == 7)) ){
-                                        checker.src = "https://lh5.googleusercontent.com/proxy/UcPKlsHCwOMun2DJiEgg8KMA7wPfP5NiEPR5XkKj5rWuhQOrpn9cuHJXwEOynuMlO6GjsQ4VpY8Jvn2vqjsijVo2fgmksU3gLKn-6pEHzPkO6J1b"
+                                        checker.src = "redCheckerKing.png"
                                         blackTurn = true;
                                         checker.setAttribute("id", `${squareId[0]},${squareId[2]},R,K`)
                                     } 
                                     else{
-                                        checker.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6yBCTQfG1DzRswfrWUj8vw4D1dHYYFSFJA&s"
+                                        checker.src = "redChecker.png"
                                         checker.setAttribute("id", `${squareId[0]},${squareId[2]},R`)
                                         blackTurn = true;
                                     }
