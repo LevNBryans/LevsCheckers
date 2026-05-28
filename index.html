@@ -9,6 +9,9 @@
                 width:400px;
                 height:400px;
                 background-color:Green;
+                margin-right: auto;
+                margin-left: 0;
+                margin-top:100;
             }
             div div{
                 width:50px;
@@ -22,18 +25,29 @@
         </style>
     </head>
     <body>
-        <h1>Lev's Checkers</h1>
+        <div>
+            <h1>Lev's Checkers</h1>
+            <p>Checkers is cool, this version is made by Lev Bryans.</p>
+        </div>
+        <hr>
+        <br>
         <div id = board></div>
         <script>
             // Setting up the board
             const board = document.getElementById("board")
             let x = 0;
-            let pickedUpPiece = false;
+            pickedUpPiece = false;
             let checkerLocation = [0,0];
             let horizontallyCorrect = false;
             let goodVertical = false;
             let pieceIsRightColor = false;
+            let blackTurn = true;
+            numOfBlackCheckers = 12;
+            numOfRedCheckers = 12;
+            squareWithCheckerId = 0;
+            checkerId = 0;
             console.log(pickedUpPiece)
+            console.log("test1")
             const checker = document.createElement("img");
             checker.src = "https://i.ebayimg.com/images/g/PBcAAOSw2NhcZzFj/s-l400.jpg"
             while(x<8){
@@ -67,9 +81,10 @@
                     let downMove = String(x * 50) + "px"
                     newDiv.style.transform = `translate(${rightMove}, ${downMove})`; 
                     //console.log(rightMove)
-                    //console.log(realI)
+                    //console.log(realI)\
+                    newDiv.setAttribute("id", `${x},${i}`);
                     board.appendChild(newDiv);
-                    newDiv.innerHTML = [x, i, ]
+
                     if (x == 5 || x == 6 || x == 7){
                         goodBlackVertical = true;
                         //console.log("good vetical")
@@ -85,11 +100,13 @@
                         goodRedVertical = false;
                     }
                     if ((x - i) % 2 == 0 && goodRedVertical){
+                        
                         const checker = document.createElement("img");
                         checker.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6yBCTQfG1DzRswfrWUj8vw4D1dHYYFSFJA&s"
                         newDiv.appendChild(checker)
                         checker.setAttribute("id", `${x},${i},R`)
                         console.log(checker.getAttribute("id"))
+                        
                         //console.log("checker in position")
                     }
                     if ((x - i) % 2 == 0 && goodBlackVertical){
@@ -98,89 +115,345 @@
                         newDiv.appendChild(checker)
                         checker.setAttribute("id", `${x},${i},B`)
                         console.log(checker.getAttribute("id"))
+
                         //console.log("checker in position")
                     }
-                    newDiv.addEventListener("click", pickUpPiece);
                     i++;
+                    newDiv.addEventListener("click", pickUpPiece);
+                    newDiv.addEventListener("click", putDownPiece);
                 }
             x++;
             }
             
-            let blackTurn = true;
-            
-            function pickUpPiece(){
-                //console.log(this.querySelector("img").getAttribute("id"));
-                
-                
-                if ( ([...this.innerHTML][2] == String(Number(checkerLocation[2])-1) ||  [...this.innerHTML][2] == String(Number(checkerLocation[2])+1) ) && [...this.innerHTML][0] != checkerLocation[0]){
-                    console.log("horizontally")
-                    horizontallyCorrect = true;
-                }
-                if (!pickedUpPiece){
-                    if (blackTurn && [...this.querySelector("img").getAttribute("id")][4] == "B" && !pickedUpPiece){
-                        pieceIsRightColor = true;
-                        console.log("right color")
-                    }
-                }
-                if ([...this.innerHTML][4] == "R" && !blackTurn && !pickedUpPiece){
-                    pieceIsRightColor = true;
-                }
-                if (pickedUpPiece && horizontallyCorrect && [...this.innerHTML][0] == checkerLocation[0]-1){
-                    if( [...this.innerHTML].length > 10){
-                    }
-                    else{
-                        console.log("placed")
-                        let thisLocation = [...this.innerHTML]
-                        const checker = document.createElement("img");
-                        if(blackTurn){
-                            checker.src = "https://i.ebayimg.com/images/g/PBcAAOSw2NhcZzFj/s-l400.jpg"
-                            this.appendChild(checker)
-                            checker.setAttribute("id", `${thisLocation[0]},${thisLocation[2]}`)
-                            blackTurn = false;
-                        }
-                        else{
-                            checker.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6yBCTQfG1DzRswfrWUj8vw4D1dHYYFSFJA&s"
-                            this.appendChild(checker)
-                            checker.setAttribute("id", `${thisLocation[0]},${thisLocation[2]}`)
-                            blackTurn = true;
-                        }
-                        let listOfCheckers = document.getElementsByClassName("hasChecker")
-                        console.log(listOfCheckers)
-                        let i = 0;
-                        while(i<listOfCheckers.length){
-                            if(listOfCheckers[i] == checkerLocation.innerHTML){
-                                console.log("found")
-                            }
-                            i++;
-                        }
-                        pickedUpPiece = false;
-                        horizontallyCorrect = false;
-                    }
 
+            function pickUpPiece(){
+                console.log('testet')
+                if(pickedUpPiece == false){
+                    checkerId = event.target.id;
+                    console.log(checkerId);
+                    console.log("test");
+                    console.log(String(checkerId)[4])
+                    console.log(blackTurn)
+                    if (blackTurn && (String(checkerId)[4] == "B")){
+                        console.log("black");
+                        let squareWithChecker = document.getElementById(`${checkerId[0]},${checkerId[2]}`);
+                        squareWithCheckerId = squareWithChecker.getAttribute("id")
+                        document.getElementById(checkerId).remove()
+                        pickedUpPiece = true;
+                    }
+                    if(!blackTurn && checkerId[4] == "R"){
+                        console.log("red");
+                        let squareWithChecker = document.getElementById(`${checkerId[0]},${checkerId[2]}`);
+                        squareWithCheckerId = squareWithChecker.getAttribute("id")
+                        document.getElementById(checkerId).remove()
+                        pickedUpPiece = true;
+                    }
+                console.log(checkerId)
                 }
-                else if(this.innerHTML.length > 10 && pieceIsRightColor){
-                    console.log("has chekcer")
-                    checkerLocation = [...this.innerHTML]
-                    console.log(checkerLocation)
-                    pickedUpPiece = true;
-                    console.log(pickedUpPiece)
-                    let checkerId = String(checkerLocation[0]) + String(checkerLocation[1]) + String(checkerLocation[2]) 
-                    if(blackTurn){
-                        checkerId = checkerId + ",B"
-                    }
-                    else{
-                        checkerId = checkerId + ",R"
-                    }
+                console.log(pickedUpPiece)
+
+            }
+            function gameOver(){
+                if(numOfBlackCheckers == 0){
+                    alert("Red is victorious over Black in this game!")
+                    location.reload();
+                }
+                if(numOfRedCheckers == 0){
+                    alert("Black is victorious over Red in this game!")
+                    location.reload();
+                }
+            }
+            function putDownPiece(){
+                console.log("put down")
+                if(pickedUpPiece == true){
+                    console.log(squareWithCheckerId)
+                    console.log("ptu dow 2")
+                    let squareId = this.id;
+                    let square = this;
+                    console.log("ids")
+                    console.log(squareId[0])
+                    console.log(squareWithCheckerId[0])
                     console.log(checkerId)
-                    let checkerToRemove = document.getElementById(checkerId)
-                    console.log(checkerToRemove)
-                    this.removeChild(checkerToRemove)
-                    horizontallyCorrect = false;
+                    console.log(String(checkerId[6]))
+                    console.log("square id childrne")
+                    console.log(square.hasChildNodes())
+                    if((blackTurn && (String(checkerId)[4] != "R")) || (String(checkerId)[6] == "K")){
+                        if(String(checkerId)[4] != "R"){
+                            if(parseInt(squareId[0], 10) + 1 == parseInt(squareWithCheckerId[0])){
+                                console.log("tpu wodn 3")
+                                if((parseInt(squareId[2]) - 1 == parseInt(squareWithCheckerId[2])) || (parseInt(squareId[2]) + 1 == parseInt(squareWithCheckerId[2]))){
+                                    let square = document.getElementById(squareId);
+                                    const checker = document.createElement("img");
+                                    if((squareId[0] == 0) || (checkerId[6] == "K")){
+                                        checker.src = "https://chongzizil.github.io/Checkers-SMG/imgs/black_cro.png"
+                                        checker.setAttribute("id", `${squareId[0]},${squareId[2]},B,K`)
+                                    }
+                                    else{
+                                        checker.src = "https://i.ebayimg.com/images/g/PBcAAOSw2NhcZzFj/s-l400.jpg"
+                                        checker.setAttribute("id", `${squareId[0]},${squareId[2]},B`)
+                                    }
+                                    square.appendChild(checker)
+                                    console.log(checker.getAttribute("id"))
+                                    pickedUpPiece = false
+                                    blackTurn = false;
+                                }
+                            }
+                            if((parseInt(squareId[0], 10) - 1 == parseInt(squareWithCheckerId[0])) && (String(checkerId)[6] == "K")){
+                                console.log(" knig tpu wodn 3")
+                                if((parseInt(squareId[2]) - 1 == parseInt(squareWithCheckerId[2])) || (parseInt(squareId[2]) + 1 == parseInt(squareWithCheckerId[2]))){
+                                let square = document.getElementById(squareId);
+                                    const checker = document.createElement("img");
+                                    if((squareId[0] == 0) || (checkerId[6] == "K")){
+                                        checker.src = "https://chongzizil.github.io/Checkers-SMG/imgs/black_cro.png"
+                                        checker.setAttribute("id", `${squareId[0]},${squareId[2]},B,K`)
+                                    }
+                                    square.appendChild(checker)
+                                    console.log(checker.getAttribute("id"))
+                                    pickedUpPiece = false
+                                    blackTurn = false
+                                    console.log("black TUrn :")
+                                    console.log(blackTurn)
+                                }
+                            }
+                        }
                     
-                } 
-                console.log(Number(checkerLocation[2])+1)
-                console.log(checkerLocation[2])
-                console.log(checkerLocation[2]-1)
+                    //black capturing
+                    if((parseInt(squareId[0], 10) + 2 == parseInt(squareWithCheckerId[0])) && (!square.hasChildNodes())){
+                        console.log("black captetr 3")
+                        if((parseInt(squareId[2]) - 2 == parseInt(squareWithCheckerId[2]))){
+                            let capturedSquarePiece = document.getElementById(`${parseInt(squareId[0]) + 1},${parseInt(squareId[2]) - 1}`)
+                            if(capturedSquarePiece.hasChildNodes() && !(this.hasChildNodes())){
+                                let capturedChecker = capturedSquarePiece.firstElementChild
+                                console.log("hsa child")
+                                let square = this;
+                                const checker = document.createElement("img");
+                                if(    ((String(checkerId)[6] == "K") || (squareId[0] == 0))    && (String(checkerId)[4] == "B")){
+                                    checker.src = "https://chongzizil.github.io/Checkers-SMG/imgs/black_cro.png"
+                                    checker.setAttribute("id", `${squareId[0]},${squareId[2]},B,K`)
+                                    blackTurn = false;
+
+                                }
+                                else if(    ((String(checkerId)[6] == "K") || (squareId[7] == 0))    && (String(checkerId)[4] == "R")){
+                                    checker.src = "https://lh5.googleusercontent.com/proxy/UcPKlsHCwOMun2DJiEgg8KMA7wPfP5NiEPR5XkKj5rWuhQOrpn9cuHJXwEOynuMlO6GjsQ4VpY8Jvn2vqjsijVo2fgmksU3gLKn-6pEHzPkO6J1b"
+                                    checker.setAttribute("id", `${squareId[0]},${squareId[2]},R,K`)
+                                    blackTurn = true;
+                                }
+                                else{
+                                    checker.src = "https://i.ebayimg.com/images/g/PBcAAOSw2NhcZzFj/s-l400.jpg"
+                                    checker.setAttribute("id", `${squareId[0]},${squareId[2]},B`)
+                                    blackTurn = false;
+                                }
+                                square.appendChild(checker)
+                                console.log(checker.getAttribute("id"))
+                                pickedUpPiece = false
+                                console.log("bad Capture 1")
+                                if (String(capturedChecker.id)[4] == "R"){
+                                    numOfRedCheckers = numOfRedCheckers - 1
+                                    console.log(numOfRedCheckers)
+                                }
+                                if (String(capturedChecker.id)[4] == "B"){
+                                    numOfBlackCheckers = numOfBlackCheckers - 1
+                                    console.log(numOfBlackCheckers)
+                                }
+                                if ((numOfBlackCheckers == 0) || (numOfRedCheckers == 0)){
+                                    gameOver()
+                                }
+                                capturedChecker.remove()
+
+                            }
+                        }
+                    
+
+                        if((parseInt(squareId[2]) + 2 == parseInt(checkerId[2]))){
+                            let capturedSquarePiece = document.getElementById(`${parseInt(squareId[0]) + 1},${parseInt(squareId[2]) + 1}`)
+                            console.log(capturedSquarePiece.hasChildNodes());
+                            console.log(capturedSquarePiece)
+                            console.log("square id:")
+                            console.log(squareId)
+                            if(capturedSquarePiece.hasChildNodes() && !(this.hasChildNodes())){
+                                let capturedChecker = capturedSquarePiece.firstElementChild
+                                capturedChecker.remove()
+                                console.log("has bildr")
+                                let square = document.getElementById(squareId);
+                                const checker = document.createElement("img");
+                                if(    ((String(checkerId)[6] == "K") || (squareId[0] == 0))    && (String(checkerId)[4] == "B")){
+                                    checker.src = "https://chongzizil.github.io/Checkers-SMG/imgs/black_cro.png"
+                                    checker.setAttribute("id", `${squareId[0]},${squareId[2]},B,K`)
+                                    blackTurn = false
+                                }
+                                else if(    ((String(checkerId)[6] == "K") || (squareId[7] == 0))    && (String(checkerId)[4] == "R")){
+                                    checker.src = "https://lh5.googleusercontent.com/proxy/UcPKlsHCwOMun2DJiEgg8KMA7wPfP5NiEPR5XkKj5rWuhQOrpn9cuHJXwEOynuMlO6GjsQ4VpY8Jvn2vqjsijVo2fgmksU3gLKn-6pEHzPkO6J1b"
+                                    checker.setAttribute("id", `${squareId[0]},${squareId[2]},R,K`)
+                                    blackTurn = true
+                                }
+                                else{
+                                    checker.src = "https://i.ebayimg.com/images/g/PBcAAOSw2NhcZzFj/s-l400.jpg"
+                                    checker.setAttribute("id", `${squareId[0]},${squareId[2]},B`)
+                                    blackTurn = false
+                                }
+                                square.appendChild(checker)
+                                console.log(checker.getAttribute("id"))
+                                pickedUpPiece = false
+                                console.log("bad Capture 2")
+                                if (String(capturedChecker.id)[4] == "R"){
+                                    numOfRedCheckers = numOfRedCheckers - 1
+                                    console.log(numOfRedCheckers)
+                                }
+                                if (String(capturedChecker.id)[4] == "B"){
+                                    numOfBlackCheckers = numOfBlackCheckers - 1
+                                    console.log(numOfBlackCheckers)
+                                }
+                                if ((numOfBlackCheckers == 0) || (numOfRedCheckers == 0)){
+                                    gameOver()
+                                }
+                                capturedChecker.remove()
+                            }
+                        }
+                    }
+                    }
+                //Red turn
+                    if((!blackTurn && (String(checkerId)[4] != "B")) || (String(checkerId)[6] == "K")){
+                        console.log("reed tuenr")
+                        console.log(squareId)
+                        if(String(checkerId[4]) != "B"){
+                            console.log("not black")
+                            if(parseInt(squareId[0], 10) - 1 == parseInt(checkerId[0])){
+                                console.log("red tpu wodn 3")
+                                if((parseInt(squareId[2]) - 1 == parseInt(checkerId[2])) || (parseInt(squareId[2]) + 1 == parseInt(checkerId[2]))){
+                                    let square = document.getElementById(squareId);
+                                    const checker = document.createElement("img");
+                                    if((checkerId[6] == "K") || (squareId[0] == 7)){
+                                        checker.src = "https://lh5.googleusercontent.com/proxy/UcPKlsHCwOMun2DJiEgg8KMA7wPfP5NiEPR5XkKj5rWuhQOrpn9cuHJXwEOynuMlO6GjsQ4VpY8Jvn2vqjsijVo2fgmksU3gLKn-6pEHzPkO6J1b"
+                                        checker.setAttribute("id", `${squareId[0]},${squareId[2]},R,K`)
+                                    }
+                                    else{
+                                        checker.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6yBCTQfG1DzRswfrWUj8vw4D1dHYYFSFJA&s"
+                                        checker.setAttribute("id", `${squareId[0]},${squareId[2]},R`)
+                                    }
+                                    square.appendChild(checker)
+                                    console.log(checker.getAttribute("id"))
+                                    pickedUpPiece = false
+                                    blackTurn = true;
+                                }
+                            }
+                            if((parseInt(squareId[0], 10) + 1 == parseInt(checkerId[0])) && (String(checkerId)[6] == "K")){
+                                console.log("red knig tpu wodn 3")
+                                if((parseInt(squareId[2]) - 1 == parseInt(checkerId[2])) || (parseInt(squareId[2]) + 1 == parseInt(checkerId[2]))){
+                                    let square = document.getElementById(squareId);
+                                    const checker = document.createElement("img");
+                                    if((squareId[0] == 7) || (checkerId[6] == "K")){
+                                        checker.src = "https://lh5.googleusercontent.com/proxy/UcPKlsHCwOMun2DJiEgg8KMA7wPfP5NiEPR5XkKj5rWuhQOrpn9cuHJXwEOynuMlO6GjsQ4VpY8Jvn2vqjsijVo2fgmksU3gLKn-6pEHzPkO6J1b"                                        
+                                        checker.setAttribute("id", `${squareId[0]},${squareId[2]},R,K`)
+                                    }
+                                    square.appendChild(checker)
+                                    console.log(checker.getAttribute("id"))
+                                    pickedUpPiece = false
+                                    blackTurn = true
+                                    console.log("black TUrn :")
+                                    console.log(blackTurn)
+                                }
+                            }
+                            
+                        }
+                        //red capturing
+                        if((parseInt(squareId[0], 10) - 2 == parseInt(checkerId[0])) && (!square.hasChildNodes())){
+                            console.log("red captetr 3")
+                            console.log("2 idsv")
+                            console.log(squareId)
+                            console.log(squareWithCheckerId)
+                            if((parseInt(squareId[2]) - 2 == parseInt(squareWithCheckerId[2]))){
+                                let capturedSquarePiece = document.getElementById(`${parseInt(squareId[0]) - 1},${parseInt(squareId[2]) - 1}`)
+                                if(capturedSquarePiece.hasChildNodes()){
+                                    let capturedChecker = capturedSquarePiece.firstElementChild
+                                    console.log("hsa child")
+                                    let square = document.getElementById(squareId);
+                                    const checker = document.createElement("img");
+                                    if(String(checkerId)[4] == "B"){
+                                        checker.src = "https://chongzizil.github.io/Checkers-SMG/imgs/black_cro.png"
+                                        checker.setAttribute("id", `${squareId[0]},${squareId[2]},B,K`)
+                                        blackTurn = false;
+                                    }
+                                    else if((String(checkerId)[4] == "R") && ((String(checkerId)[6] == "K") || (squareId[0] == 7)) ){
+                                        checker.src = "https://lh5.googleusercontent.com/proxy/UcPKlsHCwOMun2DJiEgg8KMA7wPfP5NiEPR5XkKj5rWuhQOrpn9cuHJXwEOynuMlO6GjsQ4VpY8Jvn2vqjsijVo2fgmksU3gLKn-6pEHzPkO6J1b"
+                                        blackTurn = true;
+                                        checker.setAttribute("id", `${squareId[0]},${squareId[2]},R,K`)
+                                    } 
+                                    else{
+                                        checker.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6yBCTQfG1DzRswfrWUj8vw4D1dHYYFSFJA&s"
+                                        blackTurn = true;
+                                        checker.setAttribute("id", `${squareId[0]},${squareId[2]},R`)
+                                    }
+                                    square.appendChild(checker)
+                                    console.log(checker.getAttribute("id"))
+                                    pickedUpPiece = false
+                                    console.log("bad Capture 3")
+                                    if (String(capturedChecker.id)[4] == "R"){
+                                        numOfRedCheckers = numOfRedCheckers - 1
+                                        console.log(numOfRedCheckers)
+                                    }
+                                    if (String(capturedChecker.id)[4] == "B"){
+                                        numOfBlackCheckers = numOfBlackCheckers - 1
+                                        console.log(numOfBlackCheckers)
+                                    }
+                                    if ((numOfBlackCheckers == 0) || (numOfRedCheckers == 0)){
+                                    gameOver()
+                                    }
+                                    capturedChecker.remove()
+                                }
+                            }
+                        
+
+                            if((parseInt(squareId[2]) + 2 == parseInt(checkerId[2]))){
+                                let capturedSquarePiece = document.getElementById(`${parseInt(squareId[0]) - 1},${parseInt(squareId[2]) + 1}`)
+                                if(capturedSquarePiece.hasChildNodes()){
+                                    let capturedChecker = capturedSquarePiece.firstElementChild
+                                    console.log("has bildr")
+                                    let square = document.getElementById(squareId);
+                                    const checker = document.createElement("img");
+                                    if(String(checkerId)[4] == "B"){
+                                        checker.src = "https://chongzizil.github.io/Checkers-SMG/imgs/black_cro.png"
+                                        blackTurn = false;
+                                        checker.setAttribute("id", `${squareId[0]},${squareId[2]},B,K`)
+                                    }
+                                    else if((String(checkerId)[4] == "R") && ((String(checkerId)[6] == "K") || (squareId[0] == 7)) ){
+                                        checker.src = "https://lh5.googleusercontent.com/proxy/UcPKlsHCwOMun2DJiEgg8KMA7wPfP5NiEPR5XkKj5rWuhQOrpn9cuHJXwEOynuMlO6GjsQ4VpY8Jvn2vqjsijVo2fgmksU3gLKn-6pEHzPkO6J1b"
+                                        blackTurn = true;
+                                        checker.setAttribute("id", `${squareId[0]},${squareId[2]},R,K`)
+                                    } 
+                                    else{
+                                        checker.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6yBCTQfG1DzRswfrWUj8vw4D1dHYYFSFJA&s"
+                                        checker.setAttribute("id", `${squareId[0]},${squareId[2]},R`)
+                                        blackTurn = true;
+                                    }
+                                    square.appendChild(checker)
+                                    console.log(checker.getAttribute("id"))
+                                    pickedUpPiece = false
+                                    console.log("bad Capture 4")
+                                    if (String(capturedChecker.id)[4] == "R"){
+                                        numOfRedCheckers = numOfRedCheckers - 1
+                                        console.log(numOfRedCheckers)
+                                    }
+                                    if (String(capturedChecker.id)[4] == "B"){
+                                        numOfBlackCheckers = numOfBlackCheckers - 1
+                                        console.log(numOfBlackCheckers)
+                                    }
+                                    if ((numOfBlackCheckers == 0) || (numOfRedCheckers == 0)){
+                                    gameOver()
+                                    }
+                                    capturedChecker.remove()
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            
+            if (numOfBlackCheckers > 0 && numOfRedCheckers > 0){
+                if(blackTurn){
+                    console.log("black turn");
+                }
             }
         </script>
     </body>
